@@ -7,20 +7,20 @@
 </head>
 
 <body>
-    <div>
+    <div id="loginScreen">
         <input type="text" id="userId" placeholder="아이디">
         <input type="password" id="password" placeholder="비밀번호">
         <button onclick="login()">로그인</button>
     </div>
 
-    <div>
-        <input type="text" id="message" placeholder="메시지">
-        <button onclick="sendMessage()">전송</button>
+    <div id="chatScreen" style="display: none;">
+        <div>
+            <input type="text" id="message" placeholder="메시지">
+            <button onclick="sendMessage()">전송</button>
+        </div>
+
+        <textarea id="chatBox" rows="10" cols="50" readonly></textarea>
     </div>
-
-    <textarea id="chatBox" rows="10" cols="50" readonly></textarea>
 </body>
-
-ㅗㅗㅗㅗ
 
 </html>

@@ -63,7 +63,8 @@ function handleResponse(data) {
     if (data.type === "error") {
         message = "오류: " + data.message;
     } else if (data.type === "loginOk") {
-        message = "로그인 성공!";
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('chatScreen').style.display = 'block';
     } else if (data.type === "userList") {
         message = "사용자 목록: " + data.users.join(", ");
     } else if (data.type === "chat") {
