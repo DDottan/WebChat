@@ -66,12 +66,10 @@ function handleResponse(data) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('chatScreen').style.display = 'block';
     } else if (data.type === "userList") {
-        message = "사용자 목록: " + data.users.join(", ");
+        // message = "사용자 목록: " + data.users.join(", ");
     } else if (data.type === "chat") {
         // 채팅 메시지를 표시하는 경우
         message = data.userId + ": " + data.message;
-    } else {
-        message = JSON.stringify(data);
     }
 
     // 새 메시지를 textarea에 추가

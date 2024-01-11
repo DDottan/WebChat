@@ -3,6 +3,7 @@
 
 <head>
     <title>채팅 클라이언트</title>
+    <link rel="stylesheet" href="style.css">
     <script src="chatClient.js"></script>
 </head>
 
@@ -14,12 +15,14 @@
     </div>
 
     <div id="chatScreen" style="display: none;">
-        <div>
-            <input type="text" id="message" placeholder="메시지">
+        <div id="userList">사용자 목록</div>
+        <div id="chatMessages">
+            <textarea id="chatBox" readonly></textarea>
+        </div>
+        <div id="chatInput">
+            <input type="text" id="message" placeholder="메시지 입력">
             <button onclick="sendMessage()">전송</button>
         </div>
-
-        <textarea id="chatBox" rows="10" cols="50" readonly></textarea>
     </div>
 </body>
 
