@@ -22,8 +22,10 @@ body {
 #userList {
     padding: 15px;
     background: #f7f7f7;
-    text-align: center;
     border-bottom: 1px solid #eaeaea;
+    width: 100%; /* 너비를 부모 요소에 꽉 차게 설정 */
+    height: 300px; /* 높이를 300픽셀로 설정 */
+    overflow-y: auto; /* 내용이 높이를 초과할 경우 스크롤바 생성 */
 }
 
 #chatMessages {

@@ -1,4 +1,6 @@
 var socket;
+var users = []; // 사용자 목록을 저장하는 배열
+
 
 function login() {
     var userId = document.getElementById('userId').value;
@@ -32,7 +34,7 @@ function sendMessage() {
 }
 
 function connectWebSocket() {
-    socket = new WebSocket('ws://182.252.178.106:8080/chat');
+    socket = new WebSocket('ws://127.0.0.1:8080/chat');
 
     socket.onopen = function (event) {
         console.log("웹소켓 연결됨:", event);
@@ -62,7 +64,10 @@ function sendMessageToServer(data) {
 }
 
 function handleResponse(data) {
+    console.log("서버에서 받은 메시지:", data);
+
     var chatBox = document.getElementById('chatBox');
+    var userListBox = document.getElementById('userList');
     var message = '';
 
     if (data.type === "error") {
@@ -70,15 +75,32 @@ function handleResponse(data) {
     } else if (data.type === "loginOk") {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('chatScreen').style.display = 'block';
+    } else if (data.type === "userIn") {
+        if (!users.some(user => user.userId === data.user.userId)) {
+            users.push(data.user);
+        }
+        updateUserList(userListBox);
+    } else if (data.type === "userOut") {
+        users = users.filter(user => user.userId !== data.userId);
+        updateUserList(userListBox);
     } else if (data.type === "userList") {
-        // message = "사용자 목록: " + data.users.join(", ");
+        data.users.forEach(newUser => {
+            if (!users.some(user => user.userId === newUser.userId)) {
+                users.push(newUser);
+            }
+        });
+        updateUserList(userListBox);
     } else if (data.type === "chat") {
-        // 채팅 메시지를 표시하는 경우
         message = data.userId + ": " + data.message;
     }
 
-    // 새 메시지를 textarea에 추가
     chatBox.value += message + '\n';
+}
+
+function updateUserList(userListBox) {
+    userListBox.value = users.map(user =>
+        user.userId + (user.userLevel !== 0 ? " (관리자)" : "")
+    ).join('\n');
 }
 
 connectWebSocket();
