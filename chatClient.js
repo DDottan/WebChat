@@ -2,15 +2,20 @@ var socket;
 
 function login() {
     var userId = document.getElementById('userId').value;
-    var password = document.getElementById('password').value;
 
     var data = {
         type: "login",
         userId: userId,
-        password: password
+        password: "1234"
     };
 
     sendMessageToServer(data);
+}
+
+function handleUserIdKeyPress(event) {
+    if (event.key === 'Enter') {
+        login();
+    }
 }
 
 function sendMessage() {
@@ -27,7 +32,7 @@ function sendMessage() {
 }
 
 function connectWebSocket() {
-    socket = new WebSocket('ws://127.0.0.1:8080/chat');
+    socket = new WebSocket('ws://182.252.178.106:8080/chat');
 
     socket.onopen = function (event) {
         console.log("웹소켓 연결됨:", event);
@@ -75,6 +80,5 @@ function handleResponse(data) {
     // 새 메시지를 textarea에 추가
     chatBox.value += message + '\n';
 }
-
 
 connectWebSocket();
