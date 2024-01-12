@@ -5,6 +5,12 @@ var users = []; // 사용자 목록을 저장하는 배열
 function login() {
     var userId = document.getElementById('userId').value;
 
+    // 아이디 검증
+    if (!isValidUserId(userId)) {
+        alert("사용할 수 없는 아이디입니다. 아이디는 2~12자의 알파벳, 숫자, 한글만 사용 가능합니다.");
+        return; // 아이디가 유효하지 않으면, 로그인 진행 중단
+    }
+
     var data = {
         type: "login",
         userId: userId,
@@ -14,15 +20,28 @@ function login() {
     sendMessageToServer(data);
 }
 
+function isValidUserId(userId) {
+    var regex = /^[A-Za-z0-9가-힣]{2,12}$/; // 2~12자의 알파벳, 숫자, 한글 허용
+    return regex.test(userId);
+}
+
 function handleUserIdKeyPress(event) {
     if (event.key === 'Enter') {
         login();
     }
 }
 
+function handleMessageKeyPress(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+    }
+}
+
 function sendMessage() {
     var userId = document.getElementById('userId').value;
-    var message = document.getElementById('message').value;
+    var messageInput = document.getElementById('message'); // 메시지 입력 필드 참조
+    var message = messageInput.value;
 
     var data = {
         type: "chat",
@@ -31,10 +50,12 @@ function sendMessage() {
     };
 
     sendMessageToServer(data);
+
+    messageInput.value = ''; // 메시지 전송 후 입력 필드 비우기
 }
 
 function connectWebSocket() {
-    socket = new WebSocket('ws://127.0.0.1:8080/chat');
+    socket = new WebSocket('ws://182.252.178.106:8080/chat');
 
     socket.onopen = function (event) {
         console.log("웹소켓 연결됨:", event);

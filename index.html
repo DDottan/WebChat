@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8"> <!-- 문자 인코딩 설정 추가 -->
     <title>채팅 클라이언트</title>
     <link rel="stylesheet" href="style.css">
     <script src="chatClient.js"></script>
@@ -22,7 +23,7 @@
             <textarea id="chatBox" readonly></textarea>
         </div>
         <div id="chatInput">
-            <input type="text" id="message" placeholder="메시지 입력">
+            <input type="text" id="message" placeholder="메시지 입력" onkeypress="handleMessageKeyPress(event)">
             <button onclick="sendMessage()">전송</button>
         </div>
     </div>
